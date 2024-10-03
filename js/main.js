@@ -1,6 +1,6 @@
 
 //const DB_URL = 'http://localhost:8080/db/items.db';
-const DB_URL = 'http://hangar56.github.io/db/items.db';
+const DB_URL = 'https://hangar56.github.io/lista_articulos/db/items.db';  
 let SQL;
 
 // Initialize SQL.js
