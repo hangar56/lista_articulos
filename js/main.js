@@ -1,5 +1,6 @@
 
-const DB_URL = 'http://localhost:8080/db/items.db';
+//const DB_URL = 'http://localhost:8080/db/items.db';
+const DB_URL = 'http://hangar56.github.io/db/items.db';
 let SQL;
 
 // Initialize SQL.js
@@ -45,7 +46,7 @@ function createTable(data, columns) {
 
     // Add header for the image column
     const imageHeader = document.createElement('th');
-    imageHeader.textContent = 'Image';
+    imageHeader.textContent = 'Imagen';
     headerRow.appendChild(imageHeader);
     thead.appendChild(headerRow);
 
