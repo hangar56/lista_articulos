@@ -1,0 +1,177 @@
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    line-height: 1.6;
+    color: #e1e1e1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #121212;
+}
+
+/* Modern Header Styles */
+h1, h2, h3 {
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    background: linear-gradient(to right, #000000, #1a1a1a);
+    color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    font-size: 2.5em;
+    letter-spacing: 2px;
+}
+
+h2 {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    font-size: 2em;
+    position: relative;
+    overflow: hidden;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #3498db, #2ecc71);
+}
+
+h3 {
+    background-color: #202020;
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 15px 0;
+    font-size: 1.5em;
+    position: relative;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+th {
+    background-color: #252525;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+tr:hover {
+    background-color: #252525;
+}
+
+/* Search Container */
+.search-container {
+    margin-bottom: 20px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #333;
+    border-radius: 4px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+#searchInput::placeholder {
+    color: #666;
+}
+
+/* Thumbnail and Modal */
+.thumbnail {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    border: 2px solid #333;
+}
+
+.thumbnail:hover {
+    transform: scale(1.05);
+    border-color: #3498db;
+}
+
+#imageModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.95);
+}
+
+#modalImage {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    border: 2px solid #333;
+    border-radius: 8px;
+}
+
+#closeModal {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#closeModal:hover,
+#closeModal:focus {
+    color: #3498db;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Add smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+    background: #3498db;
+    color: #ffffff;
+}
