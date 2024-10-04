@@ -12,7 +12,52 @@ initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1
     })
     .catch(err => console.error('Error initializing SQL.js:', err));
 
-async function loadDatabase() {
+
+
+    async function loadDatabase() {
+        try {
+            const response = await fetch(DB_URL);
+            const arrayBuffer = await response.arrayBuffer();
+            db = new SQL.Database(new Uint8Array(arrayBuffer));
+            
+            // Load initial data
+            loadTableData();
+            
+            // Populate dropdowns
+            populateDropdown('escalaSelect', 'escala');
+            populateDropdown('modeloSelect', 'cat1');
+            populateDropdown('tipoSelect', 'cat2');
+            
+            // Initialize event listeners
+            initializeEventListeners();
+        } catch (error) {
+            console.error('Error loading database:', error);
+            document.getElementById('table-container').innerHTML = 'Error loading database. Please check the console for details.';
+        } finally {
+            document.getElementById('loading').style.display = 'none';
+        }
+    }
+
+    function populateDropdown(selectId, columnName) {
+        try {
+            const query = `SELECT DISTINCT ${columnName} FROM articulos WHERE idioma='ESP' ORDER BY ${columnName}`;
+            const result = db.exec(query);
+            
+            if (result.length > 0) {
+                const select = document.getElementById(selectId);
+                result[0].values.forEach(value => {
+                    const option = document.createElement('option');
+                    option.value = value[0];
+                    option.textContent = value[0];
+                    select.appendChild(option);
+                });
+            }
+        } catch (error) {
+            console.error(`Error populating ${selectId}:`, error);
+        }
+    }
+
+/* async function loadDatabase() {
     try {
         const response = await fetch(DB_URL);
         const arrayBuffer = await response.arrayBuffer();
@@ -27,8 +72,47 @@ async function loadDatabase() {
     } finally {
         document.getElementById('loading').style.display = 'none';
     }
-}
-
+} */
+    function loadTableData() {
+        const escala = document.getElementById('escalaSelect').value;
+        const modelo = document.getElementById('modeloSelect').value;
+        const tipo = document.getElementById('tipoSelect').value;
+        
+        let query = `
+            SELECT cat1 as Modelo, 
+                   cat2 as Tipo, 
+                   descripcion as Descripción,
+                   item as Item,
+                   escala as Escala,
+                   precio as Precio 
+            FROM articulos 
+            WHERE idioma='ESP'
+        `;
+        
+        // Add filter conditions
+        if (escala !== '*') {
+            query += ` AND escala='${escala}'`;
+        }
+        if (modelo !== '*') {
+            query += ` AND cat1='${modelo}'`;
+        }
+        if (tipo !== '*') {
+            query += ` AND cat2='${tipo}'`;
+        }
+        
+        try {
+            const result = db.exec(query);
+            if (result.length > 0) {
+                createTable(result[0].values, result[0].columns);
+            } else {
+                document.getElementById('table-container').innerHTML = 'No se encontraron resultados.';
+            }
+        } catch (error) {
+            console.error('Error loading table data:', error);
+            document.getElementById('table-container').innerHTML = 'Error loading table data. Please check the console for details.';
+        }
+    }
+    
 function createTable(data, columns) {
     const table = document.createElement('table');
     table.id = 'productTable'; // Added ID for search functionality
@@ -81,6 +165,8 @@ function createTable(data, columns) {
 
 function initializeEventListeners() {
     // Search functionality
+    document.getElementById('filterButton').addEventListener('click', loadTableData);
+
     document.getElementById('searchInput').addEventListener('keyup', function() {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("searchInput");

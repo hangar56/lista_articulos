@@ -16,14 +16,36 @@
         <h2>Catalogo</h2>
         <h3>
             <a href="https://wa.me/5491133847078" target="_blank">+54911 3384 7078</a> - 
-            <a href="mailto:hangar56@hangar56.com">hangar56@hangar56.com</a>
+            <a href="mailto:hangar56design@gmail.com">hangar56design@gmail.com</a>
         </h3>
 
         <div class="search-container">
             <input type="text" id="searchInput"
                 placeholder="Filtrar items...">
         </div>
-        <div id="table-container"></div>
+        <div id="table-container">
+            <div class="filter-container">
+                <div class="filter-group">
+                    <label for="escalaSelect">Escala:</label>
+                    <select id="escalaSelect" class="filter-select">
+                        <option value="*">Todos</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="modeloSelect">Modelo:</label>
+                    <select id="modeloSelect" class="filter-select">
+                        <option value="*">Todos</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="tipoSelect">Tipo:</label>
+                    <select id="tipoSelect" class="filter-select">
+                        <option value="*">Todos</option>
+                    </select>
+                </div>
+                <button id="filterButton" class="filter-button">Filtrar</button>
+            </div>
+        </div>
         <div id="imageModal">
             <span id="closeModal">&times;</span>
             <img id="modalImage">
