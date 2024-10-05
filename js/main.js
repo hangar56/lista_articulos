@@ -12,8 +12,6 @@ initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1
     })
     .catch(err => console.error('Error initializing SQL.js:', err));
 
-
-
     async function loadDatabase() {
         try {
             const response = await fetch(DB_URL);
@@ -29,12 +27,12 @@ initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1
             populateDropdown('tipoSelect', 'cat2');
             
             // Initialize event listeners
-            initializeEventListeners();
+            //initializeEventListeners();
         } catch (error) {
             console.error('Error loading database:', error);
             document.getElementById('table-container').innerHTML = 'Error loading database. Please check the console for details.';
         } finally {
-            document.getElementById('loading').style.display = 'none';
+            //document.getElementById('loading').style.display = 'none';
         }
     }
 
@@ -57,22 +55,6 @@ initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1
         }
     }
 
-/* async function loadDatabase() {
-    try {
-        const response = await fetch(DB_URL);
-        const arrayBuffer = await response.arrayBuffer();
-        const db = new SQL.Database(new Uint8Array(arrayBuffer));
-        const result = db.exec("SELECT cat1 as Modelo,cat2 as Tipo,descripcion as Descripción,item as Item,escala as Escala,precio as Precio FROM articulos where idioma='ESP'");
-        createTable(result[0].values, result[0].columns);
-        // Initialize event listeners and modal functionality after table is created
-        initializeEventListeners();
-    } catch (error) {
-        console.error('Error loading database:', error);
-        document.getElementById('table-container').innerHTML = 'Error loading database. Please check the console for details.';
-    } finally {
-        document.getElementById('loading').style.display = 'none';
-    }
-} */
     function loadTableData() {
         const escala = document.getElementById('escalaSelect').value;
         const modelo = document.getElementById('modeloSelect').value;
@@ -110,6 +92,9 @@ initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1
         } catch (error) {
             console.error('Error loading table data:', error);
             document.getElementById('table-container').innerHTML = 'Error loading table data. Please check the console for details.';
+        }
+        finally{
+            initializeEventListeners(); // nuevo... testing.
         }
     }
     
