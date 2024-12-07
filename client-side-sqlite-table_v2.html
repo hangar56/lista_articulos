@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articulos Table</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        #loading { display: none; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+</head>
+<body>
+    <h1>Articulos Table</h1>
+    <div id="loading">Loading database...</div>
+    <div id="table-container"></div>
+
+    <script>
+        const DB_URL = 'http://localhost:8080/db/items.db';
+
+        // Initialize SQL.js
+        let SQL;
+        initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}` })
+            .then(sql => {
+                SQL = sql;
+                console.log("SQL.js initialized");
+                loadDatabase();
+            })
+            .catch(err => console.error('Error initializing SQL.js:', err));
+
+        async function loadDatabase() {
+            try {
+                document.getElementById('loading').style.display = 'block';
+                const response = await fetch(DB_URL);
+                const arrayBuffer = await response.arrayBuffer();
+                const db = new SQL.Database(new Uint8Array(arrayBuffer));
+                //const result = db.exec("SELECT * FROM articulos");
+                const result = db.exec("SELECT cat1 as Modelo,cat2 as Tipo,descripcion as Descripción,item as Item,escala as Escala,precio as Precio FROM articulos where idioma='ESP'");
+                createTable(result[0].values, result[0].columns);
+            } catch (error) {
+                console.error('Error loading database:', error);
+                document.getElementById('table-container').innerHTML = 'Error loading database. Please check the console for details.';
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        function createTable(data, columns) {
+            const table = document.createElement('table');
+            const thead = document.createElement('thead');
+            const tbody = document.createElement('tbody');
+
+            // Create header row
+            const headerRow = document.createElement('tr');
+            columns.forEach(headerText => {
+                const th = document.createElement('th');
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+
+        // Add header for the image column
+        const imageHeader = document.createElement('th');
+        imageHeader.textContent = 'Image';
+        headerRow.appendChild(imageHeader);
+        thead.appendChild(headerRow);
+
+            // Create data rows
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach(cellData => {
+                    const td = document.createElement('td');
+                    td.textContent = cellData !== null ? cellData : '';
+                    tr.appendChild(td);
+                });
+
+            // Add image column
+            const imageTd = document.createElement('td');
+            const img = document.createElement('img');
+            img.src = `images/${row[3]}.jpeg`;
+            img.alt = "Ver Foto";
+            img.className = "thumbnail";
+            imageTd.appendChild(img);
+            tr.appendChild(imageTd);
+
+                tbody.appendChild(tr);
+            });
+
+            table.appendChild(thead);
+            table.appendChild(tbody);
+
+            const container = document.getElementById('table-container');
+            container.innerHTML = ''; // Clear previous content
+            container.appendChild(table);
+        }
+    </script>
+</body>
+</html>

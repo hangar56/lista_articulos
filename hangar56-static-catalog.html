@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangar 56 Product Catalog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        #searchInput {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hangar 56 Product Catalog</h1>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for products...">
+    </div>
+
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Name</th>
+                <th>Scale</th>
+                <th>Price (ARS)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>32430</td>
+                <td>Set conversión A-4AR Trumpeter (Incl. rueda nariz)</td>
+                <td>1/32</td>
+                <td>41,000</td>
+            </tr>
+            <tr>
+                <td>32465</td>
+                <td>Rueda Delantera A-4 Trumpeter</td>
+                <td>1/32</td>
+                <td>4,900</td>
+            </tr>
+            <tr>
+                <td>32251</td>
+                <td>Nariz Dagger Italeri</td>
+                <td>1/32</td>
+                <td>8,500</td>
+            </tr>
+            <tr>
+                <td>32256</td>
+                <td>Nariz Finger Italeri</td>
+                <td>1/32</td>
+                <td>8,500</td>
+            </tr>
+            <tr>
+                <td>32211</td>
+                <td>Petalos Toberas Italeri</td>
+                <td>1/32</td>
+                <td>8,700</td>
+            </tr>
+            <tr>
+                <td>32060</td>
+                <td>BR-250 Esc 1/32 (4u.)</td>
+                <td>1/32</td>
+                <td>11,000</td>
+            </tr>
+            <tr>
+                <td>48010</td>
+                <td>Bombas Mk-17 1000lbs Esc 1/48(4u.)</td>
+                <td>1/48</td>
+                <td>7,900</td>
+            </tr>
+            <tr>
+                <td>48021</td>
+                <td>Snakeye 1/48 (4u.)</td>
+                <td>1/48</td>
+                <td>7,900</td>
+            </tr>
+            <tr>
+                <td>48040</td>
+                <td>BR-250 Esc 1/48 (4u.)</td>
+                <td>1/48</td>
+                <td>7,900</td>
+            </tr>
+            <tr>
+                <td>48055</td>
+                <td>MK-77 (3)</td>
+                <td>1/48</td>
+                <td>5,900</td>
+            </tr>
+            <tr>
+                <td>72002</td>
+                <td>Bombas Mk-17 1000lbs Esc 1/72 (4u.)</td>
+                <td>1/72</td>
+                <td>7,100</td>
+            </tr>
+            <tr>
+                <td>72020</td>
+                <td>Snakeye 1/72 (4u.)</td>
+                <td>1/72</td>
+                <td>7,100</td>
+            </tr>
+            <tr>
+                <td>72030</td>
+                <td>BR-250 Esc 1/72 (4u.)</td>
+                <td>1/72</td>
+                <td>7,100</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("productTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
